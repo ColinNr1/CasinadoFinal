@@ -1720,19 +1720,26 @@
       });
     }
 
-    function updateDoorLockStates() {
-      doorEntries.forEach(({ door, liveDate }) => {
-        if (testMode) {
-          door.classList.remove("locked");
-        } else {
-          if (today < liveDate) {
-            door.classList.add("locked");
-          } else {
-            door.classList.remove("locked");
-          }
-        }
-      });
+   function updateDoorLockStates() {
+  const now = new Date();
+  const todayDay = now.getDate();
+
+  doorEntries.forEach(({ door, liveDate }) => {
+
+    if (testMode) {
+      door.classList.remove("locked");
+      return;
     }
+
+    const doorDay = liveDate.getDate();
+
+    if (doorDay === todayDay) {
+      door.classList.remove("locked");
+    } else {
+      door.classList.add("locked");
+    }
+  });
+}
 
     function adjustCurrency(text) {
       return text || "";
